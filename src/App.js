@@ -15,12 +15,16 @@ const App = () => {
           name: newName,
           id: persons.length + 1,
         }
-        setPersons(persons.concat(personObject))
         setNewName('')
+        for (let i = 0; i < persons.length; i++) {    
+          if (newName === persons[i].name) {alert(`${newName} ya existe en la agenda`)
+                                            break} 
+          else {if (i === persons.length-1)
+                setPersons(persons.concat(personObject))}
+        }
       }
 
-  const handleNameChange = (event) => {    
-      console.log(event.target.value)    
+  const handleNameChange = (event) => {      
       setNewName(event.target.value)  }
 
   return (
@@ -48,7 +52,8 @@ const App = () => {
 
 export default App
 
-/* Explicación
+/* Explicación ejercicio 2.6
+/
 /  En la línea 1 hay dos importaciones: la primera es estándar, y la segunda importa el hook de estado (useState). Un hook es una 
 /  función especial que permite conectarse a ciertas características de React. Es algo que antes de la versión 16.8 de React se hacía
 /  con clases, pero ahora se hace de forma más sencilla.
@@ -80,5 +85,15 @@ export default App
 /  lista.
 /
 /  Finalmente, en la línea 49 se exporta el componente App para que pueda ser utilizado en otra parte.
+/
+/  Explicación ejercicio 2.7
+/
+/  Se añaden las líneas 19 a 24 para evitar que se introduzcan nombres repetidos en la agenda. Se hace un bucle sobre persons que se 
+/  detiene en caso de encontrar un nombre repetido, mostrando un mensaje de alerta, pero si el buble llega al final, enconces el
+/  nuevo nombre se añade a la agenda.
+/
+/
+/
+/
 /*/
 
