@@ -1,0 +1,12 @@
+1. Según voy poniendo letras, aparecen por la consola los nombres en los que hay coincidencia con las letras que he introducido
+
+	1a. Para controlar el estado del input de búsqueda incluyo un nuevo hook con la variable newLista
+	1b. Para controlar la escritura del elemento input incluyo un controlador de eventos llamado handleBuscaChange
+	1c. Para que estas definiciones funciones coloco el correspondiente value en el input y la llamada al evento onChange
+	1d. Ahora comparo el valor de lo escrito en el input de búsqueda con la lista de nombres y saco por consola una lista con las coincidencias
+
+2. Creo un objeto con las coincidencias. También es posible crear un subconjunto de persons...
+
+	Asigno a newLista un booleano que figura como una propiedad de los elementos de Persons, de ese modo gestiono las coincidencias
+
+3. Renderizar la lista de nombres donde corresponda

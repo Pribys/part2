@@ -12,3 +12,6 @@ He subido el commit a GitHub y allí aparecen dos, ya que por defecto se creo el
 
 # Segundo commit: ejercicio 2.7 terminado
 Ahora debemos incorporar la funcionalidad de que si queremos introducir un nombre repetido en la agenda, este no se introduzca y en su lugar aparezca un mensaje de alerta.
+
+# Tercer commit: ejercicios 2.8 y 2.9 terminado
+Hay que hacer dos cosas: agregar un nuevo input para introducir el número de teléfono de cada persona (y que se muestre en el render) e incluir un campo de búsqueda que permita seleccionar a las personas por nombre.

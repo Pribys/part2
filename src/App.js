@@ -1,99 +1,103 @@
-import React, { useState } from 'react'
-import Person from './components/Person'
+import React, { useState } from "react";
 
 const App = () => {
+  const [persons, setPersons] = useState([
+    { name: "Arto Hellas", number: "040-123456" },
+    { name: "Ada Lovelace", number: "39-44-5323523" },
+    { name: "Dan Abramov", number: "12-43-234345" },
+    { name: "Mary Poppendieck", number: "39-23-6423122" },
+  ]);
+  const [newName, setNewName] = useState("");
+  const [newNumber, setNewNumber] = useState("");
+  const [filter, setFilter] = useState("");
 
-  const [ persons, setPersons ] = useState([
-    { name: 'Arto Hellas',
-      id: 1 }
-  ]) 
-  const [ newName, setNewName ] = useState('')
+  const handleNameChange = (e) => {
+    setNewName(e.target.value);
+  };
 
-  const addPerson = (event) => {    
-      event.preventDefault()    
-      const personObject = {
-          name: newName,
-          id: persons.length + 1,
-        }
-        setNewName('')
-        for (let i = 0; i < persons.length; i++) {    
-          if (newName === persons[i].name) {alert(`${newName} ya existe en la agenda`)
-                                            break} 
-          else {if (i === persons.length-1)
-                setPersons(persons.concat(personObject))}
-        }
-      }
+  const handleNumberChange = (e) => {
+    setNewNumber(e.target.value);
+  };
 
-  const handleNameChange = (event) => {      
-      setNewName(event.target.value)  }
+  const handleFilterChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (
+      persons.some(
+        (person) => person.name.toLowerCase() === newName.toLowerCase()
+      )
+    ) {
+      alert(`${newName} is already added to phonebook`);
+      setNewName("");
+      setNewNumber("");
+      return;
+    }
+
+    const newPerson = { name: newName, number: newNumber };
+    setPersons(persons.concat(newPerson));
+    setNewName("");
+    setNewNumber("");
+  };
 
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addPerson}>
+      <div>
+        Filter shown with <input value={filter} onChange={handleFilterChange} />
+      </div>
+      <form onSubmit={handleSubmit}>
+        <h2>Add a new</h2>
         <div>
-          name: <input 
-            value={newName}
-            onChange={handleNameChange} />
+          Name: <input onChange={handleNameChange} value={newName} />
         </div>
         <div>
-          <button type="submit">add</button>
+          Number: <input onChange={handleNumberChange} value={newNumber} />
+        </div>
+        <div>
+          <button type="submit">Add</button>
         </div>
       </form>
+
       <h2>Numbers</h2>
-      <ul>
-        {persons.map(person => 
-          <Person key={person.id}  person={person.name} />
-        )}
-      </ul>
+      {persons
+        .filter((person) =>
+          person.name.toLowerCase().includes(filter.toLowerCase())
+        )
+        .map((filteredPerson) => {
+          return (
+            <p key={filteredPerson.name}>
+              {filteredPerson.name} {filteredPerson.number}
+            </p>
+          );
+        })}
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 
-/* Explicación ejercicio 2.6
+/* Explicación ejercicios 2.8 y 2.9
 /
-/  En la línea 1 hay dos importaciones: la primera es estándar, y la segunda importa el hook de estado (useState). Un hook es una 
-/  función especial que permite conectarse a ciertas características de React. Es algo que antes de la versión 16.8 de React se hacía
-/  con clases, pero ahora se hace de forma más sencilla.
-/  En la línea 2 se importa con componente. Los componentes son el centro de React. Cada aplicación consta de muchos componentes. De 
-/  momento, esta aplicación solo tiene dos componentes: Person.js y App.js. Los componentes se encuentran en la carpeta components
-/ excepto App.js que va directamente en la carpeta src.
+/  En líneas 4 a 9 aparecen los datos de prueba para el ejercicio. Esto junto a las líneas 10, 11 y 12 son los hooks de estado de la 
+/  aplicación (Un Hook es una función especial que permite “conectarse” a características de React. Por ejemplo, useState es un Hook /  que te permite añadir el estado de React a un componente de función)
+/  Entre las líneas 14 y 44 tenemos varios controladores de eventos. Los tres primeros son bastante fáciles de entender, solo
+/  establecen un valor para la correspondiente variable de estado a partir de los cambios en un input. El cuarto controlador hace más
+/  cosas. La línea 27 impide que se produzca el comportamiento por defecto al pulsar un botón, que es recargar la página. El if de la
+/  línea 29 sirve para impedir que se añada una nueva entrada a la lista si el nombre ya está registrado. El método de array some()
+/  comprueba si al menos un elemento del array cumple con la condición implementada por la función proporcionada. Si el if no se 
+/  cumple, no salta el return y se añade una nueva persona a la lista.
+/  La línea 46 es estándar. Lo que haya dentro del return de app es lo que se representará en pantalla. Entre las líneas 48 y 63
+/  aparecen todas las referencias necesarias para que funcionen los controladores de eventos. 
+/  La parte más compleja está entre las líneas 66 y 76. El método filter() crea un nuevo array con todos los elementos que cumplan 
+/  la condición implementada por la función dada. El método includes() determina si una matriz incluye un determinado elemento, 
+/  devuelve true o false según corresponda. Dentro del includes "filter" es el nombre de la variable de estado, no del método 
+/  descrito anteriormente. El método map transforma los elementos de un array uno por uno aplicándoles una función en base al 
+/  elemento y a su posición, dicha función es programada por nosotros de acuerdo a la necesidad, es decir, podemos usar 
+/  condicionales y distintas herramientas que la programación nos permita ejecutar siempre y cuando se ejecuten de forma síncrona.
+/  En el map se ha seguido la notación larga de la función de flecha, pero se podía abreviar y no incluir el return.
 /
-/  En las líneas 4 a 9 se definen los dos hooks de estado que se utilizan: el primero hace el seguimiento de la agenda y el segundo
-/  controla la incorporación de nuevas personas a la agenda. useState tiene un valor inicial, que es el que aparece entre parántesis,
-/  y devuelve dos valores, el primero es el valor actual de estado y el segundo el nuevo valor del estado. Los nombres de estos 
-/  valores podemos escojerlos como queramos.
-/
-/  Entre las líneas 12 y 20 se define la función de flecha addPerson, que se ejecuta al pulsar el botón del formulario. La          /  instrucción event.preventDefault() sirve para que la página se recarge al pulsar el botón (que sería el comportamiento            /  predeterminado). Después, en las líneas 14 a 17, se define un objeto para almacenar los datos de cada persona de la agenda.
-/  En la línea 18 se actualiza el valor de persons (de una de las variables de hook de estado) concatenando el valor del objeto
-/  personObject al estado anterior. En la línea 19 se reestablece el valor de la otra variable (newName) de estado.
-/
-/  Entre las líneas 22 y 24 se define la función de flecha handleNameChange, que sirve para manejar la edición de la ventana del 
-/  nombre del formulario. La línea 23 es prescindible, solo reproduce en la consola el valor que haya escrito en la ventana. La línea
-/  24 asigna el valor escrito en la ventana al valor de la variable de estado newName. Esta función de flecha tiene sentido junto a 
-/  línea 33.
-/
-/  Entre las líneas 26 y 46 se define lo que va a renderizar la aplicación. Aunque todo parece HTML, en realidad es jsx, que se 
-/  transpila a javaScript. Lo bueno es que puede interpretarse como si fuese HTML, por ello no son necesarias muchas explicaciones.
-/  La única parte que precisa de comentarios son las líneas 41 y 42, que sirven para representar la agenda en la pantalla. La función
-/  map nos permite recorrer el array persons según las indicaciones que se hagan en la propia función de flecha. En este caso, la
-/  instrucción es representar el componente Person utilizando dos datos: el nombre y el id. Para saber qué se va a representar con
-/  exactitud hay que consultar el archivo del componente Person, sin embargo, el valor de key no aparece definido en Person ni se 
-/  representa en pantalla, solamente se incluye porque React da un error ni no asociamos una clave a los elementos generados en una
-/  lista.
-/
-/  Finalmente, en la línea 49 se exporta el componente App para que pueda ser utilizado en otra parte.
-/
-/  Explicación ejercicio 2.7
-/
-/  Se añaden las líneas 19 a 24 para evitar que se introduzcan nombres repetidos en la agenda. Se hace un bucle sobre persons que se 
-/  detiene en caso de encontrar un nombre repetido, mostrando un mensaje de alerta, pero si el buble llega al final, enconces el
-/  nuevo nombre se añade a la agenda.
-/
-/
-/
-/
-/*/
-
+*/
