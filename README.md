@@ -15,3 +15,10 @@ Ahora debemos incorporar la funcionalidad de que si queremos introducir un nombr
 
 # Tercer commit: ejercicios 2.8 y 2.9 terminado
 Hay que hacer dos cosas: agregar un nuevo input para introducir el número de teléfono de cada persona (y que se muestre en el render) e incluir un campo de búsqueda que permita seleccionar a las personas por nombre.
+
+# Cuarto: ejercicio 2.11 (el 2.10 es dividir en componentes, no lo hago)
+El ejercicio consiste en obtener los datos de un servidor externo, en este caso db.json en el puerto 3001, según se explica en la parte de teoría. Para resolver esto voy siguiendo los mismos pasos que se describen en el ejemplo de las notas:
+1.- Crear el archivo db.json en la raíz del proyecto
+2.- Instalar axios para controlar la comunicación con el servidor
+3.- Instalar json-server como una dependencia para el desarrollo e instalar un script para iniciar el json-server de modo sencillo
+Con estos pasos tenemos abierto el documento con los datos en el puerto 3001 para su consulta, pero queda obtener los datos del documento para que estén disponibles en la aplicación, para lo cual se utiliza un hook de efecto.

@@ -1,12 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: "Arto Hellas", number: "040-123456" },
-    { name: "Ada Lovelace", number: "39-44-5323523" },
-    { name: "Dan Abramov", number: "12-43-234345" },
-    { name: "Mary Poppendieck", number: "39-23-6423122" },
-  ]);
+  const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filter, setFilter] = useState("");
@@ -42,6 +38,18 @@ const App = () => {
     setNewName("");
     setNewNumber("");
   };
+
+  const hookEfecto = () => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }
+  
+  useEffect(hookEfecto, [])
 
   return (
     <div>
@@ -99,5 +107,13 @@ export default App;
 /  elemento y a su posición, dicha función es programada por nosotros de acuerdo a la necesidad, es decir, podemos usar 
 /  condicionales y distintas herramientas que la programación nos permita ejecutar siempre y cuando se ejecuten de forma síncrona.
 /  En el map se ha seguido la notación larga de la función de flecha, pero se podía abreviar y no incluir el return.
+/
+/  Explicación ejercicio 2.11
+/  Se borran los datos de la matriz persons, que ahora se obtendrán del servidor. Se utiliza el hook de efecto para la comunicación con el servidor, tal como vemos en las líneas 42 a 52 
+/  
+/
+/
+/
+/
 /
 */
