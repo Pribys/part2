@@ -34,9 +34,13 @@ const App = () => {
     }
 
     const newPerson = { name: newName, number: newNumber };
-    setPersons(persons.concat(newPerson));
-    setNewName("");
-    setNewNumber("");
+    axios
+    .post('http://localhost:3001/persons', newPerson)
+    .then(response => {
+      setPersons(persons.concat(response.data))      
+      setNewName("")    
+      setNewNumber("")
+    })
   };
 
   const hookEfecto = () => {
@@ -109,10 +113,13 @@ export default App;
 /  En el map se ha seguido la notación larga de la función de flecha, pero se podía abreviar y no incluir el return.
 /
 /  Explicación ejercicio 2.11
-/  Se borran los datos de la matriz persons, que ahora se obtendrán del servidor. Se utiliza el hook de efecto para la comunicación con el servidor, tal como vemos en las líneas 42 a 52 
+/  Se borran los datos de la matriz persons, que ahora se obtendrán del servidor. Se utiliza el hook de efecto para la comunicación 
+/  con el servidor, tal como vemos en las líneas 42 a 52 
 /  
-/
-/
+/  Explicación ejercicio 2.15
+/  Entre las líneas 22 a 40, tal como queda el código antes de cambiar nada en este ejercicio, tenemos el componente que se encarga 
+/  de añadir una nueva persona pero, tal como está, se pierde al refrescar la pantalla. Para conservarlo en el archivo json, debemos
+/  echar mano del método POST y axios. Lo nuevo son las líneas 37, 38 y 39.
 /
 /
 /

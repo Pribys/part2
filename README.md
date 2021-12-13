@@ -22,3 +22,6 @@ El ejercicio consiste en obtener los datos de un servidor externo, en este caso 
 2.- Instalar axios para controlar la comunicación con el servidor
 3.- Instalar json-server como una dependencia para el desarrollo e instalar un script para iniciar el json-server de modo sencillo
 Con estos pasos tenemos abierto el documento con los datos en el puerto 3001 para su consulta, pero queda obtener los datos del documento para que estén disponibles en la aplicación, para lo cual se utiliza un hook de efecto.
+
+# Quinto: ejercicio 2.15 (2.12 a 2.14 tratan sobre la aplicación de países)
+Ahora se trata de que las nuevas personas introducidas permanezcan en el servidor json.
