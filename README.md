@@ -25,3 +25,6 @@ Con estos pasos tenemos abierto el documento con los datos en el puerto 3001 par
 
 # Quinto: ejercicio 2.15 (2.12 a 2.14 tratan sobre la aplicación de países)
 Ahora se trata de que las nuevas personas introducidas permanezcan en el servidor json.
+
+# Sexto: ejercicio 2.17 (2.16 es para sacar componentes, no lo hago)
+Se trata de permitir la eliminación de elementos de la lista. Para ello aparecerá un botón junto a cada entrada, que permita su eliminación. Antes de eliminar un usuario, debe aparecer una ventana de confirmación.

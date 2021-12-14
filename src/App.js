@@ -55,6 +55,12 @@ const App = () => {
   
   useEffect(hookEfecto, [])
 
+  const eliminarPersona = (id) => {
+    axios
+     .delete(`http://localhost:3001/persons/${id}`, id)
+     .then(hookEfecto)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -81,8 +87,9 @@ const App = () => {
         )
         .map((filteredPerson) => {
           return (
-            <p key={filteredPerson.name}>
+            <p key={filteredPerson.id}>
               {filteredPerson.name} {filteredPerson.number}
+              {" "}<button onClick={() => eliminarPersona(filteredPerson.id)}>Eliminar</button>
             </p>
           );
         })}
@@ -119,7 +126,13 @@ export default App;
 /  Explicación ejercicio 2.15
 /  Entre las líneas 22 a 40, tal como queda el código antes de cambiar nada en este ejercicio, tenemos el componente que se encarga 
 /  de añadir una nueva persona pero, tal como está, se pierde al refrescar la pantalla. Para conservarlo en el archivo json, debemos
-/  echar mano del método POST y axios. Lo nuevo son las líneas 37, 38 y 39.
+/  echar mano del método POST y axios. Lo nuevo son las líneas 37, 38 y 39. Por otra parte, hay varias líneas del hook de efecto que 
+/  ya no son necesarias.
+/
+/  Explicación ejercicio 2.17
+/  En la línea 92 se llama a la función que se encarga de eliminar el dato. La llamada debe identificar el dato que se quiere 
+/  eliminar. La función eliminarPersona es sencilla pero tuve bastantes dificultades hasta descubrir cómo escribir correctamente
+/  el argumento del delete. Finalmente, la llamada al hook de efecto es para refrescar la pantalla con los datos nuevos.
 /
 /
 /
