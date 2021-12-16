@@ -20,20 +20,31 @@ const App = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    const newPerson = { name: newName, number: newNumber }
 
     if (
       persons.some(
         (person) => person.name.toLowerCase() === newName.toLowerCase()
       )
     ) {
-      alert(`${newName} is already added to phonebook`);
-      setNewName("");
-      setNewNumber("");
-      return;
+        if (window.confirm(`${newName} ya está en la agenda, ¿quieres cambiar su número?`)) {
+          const persona = persons
+            .filter((person) =>
+              person.name.toLowerCase().includes(newName.toLowerCase())
+            )
+          const cambiarNumero = { ...persona[0], number: newNumber }
+          axios
+            .put(`http://localhost:3001/persons/${persona[0].id}`, cambiarNumero)
+            .then(hookEfecto)
+          setNewName("")    
+          setNewNumber("")
+        } 
+        setNewName("")    
+        setNewNumber("")
+        return
     }
-
-    const newPerson = { name: newName, number: newNumber };
+    
     axios
     .post('http://localhost:3001/persons', newPerson)
     .then(response => {
@@ -55,10 +66,12 @@ const App = () => {
   
   useEffect(hookEfecto, [])
 
-  const eliminarPersona = (id) => {
-    axios
-     .delete(`http://localhost:3001/persons/${id}`, id)
+  const eliminarPersona = (filteredPerson) => {
+    if (window.confirm(`¿Quieres eliminar a ${filteredPerson.name}?`)) {
+      axios
+     .delete(`http://localhost:3001/persons/${filteredPerson.id}`, filteredPerson.id)
      .then(hookEfecto)
+    } 
   }
 
   return (
@@ -89,7 +102,7 @@ const App = () => {
           return (
             <p key={filteredPerson.id}>
               {filteredPerson.name} {filteredPerson.number}
-              {" "}<button onClick={() => eliminarPersona(filteredPerson.id)}>Eliminar</button>
+              {" "}<button onClick={() => eliminarPersona(filteredPerson)}>Eliminar</button>
             </p>
           );
         })}
@@ -133,6 +146,15 @@ export default App;
 /  En la línea 92 se llama a la función que se encarga de eliminar el dato. La llamada debe identificar el dato que se quiere 
 /  eliminar. La función eliminarPersona es sencilla pero tuve bastantes dificultades hasta descubrir cómo escribir correctamente
 /  el argumento del delete. Finalmente, la llamada al hook de efecto es para refrescar la pantalla con los datos nuevos.
+/
+/  Ejercicio 2.18
+/  Para que aparezca un mensaje de confirmación antes de eliminar una persona he tenido que cambiar el argumento que envía la función
+/  eliminarPersona(), de modo que ahora envía el objeto completo, ya que en la definición de la función ya no se utiliza solo el id
+/  sino que también se utiliza el nombre.
+/  El código entre las líneas 31 y 45 sirve para que se pueda cambiar el teléfono de una persona que ya aparece en la agenda. He 
+/  tenido que subir la definición de newPerson para poder utilizarla en esta parte. Las líneas 32 a 35 sirven para seleccionar a la
+/  persona que hemos introducido. La línea 36 coge el objeto correspondiente a la persona en cuestión y cambia la propiedad que se 
+/  indica (el número de teléfono). Luego, para llevar el cambio al servidor se utiliza el método put.
 /
 /
 /

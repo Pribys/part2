@@ -28,3 +28,6 @@ Ahora se trata de que las nuevas personas introducidas permanezcan en el servido
 
 # Sexto: ejercicio 2.17 (2.16 es para sacar componentes, no lo hago)
 Se trata de permitir la eliminación de elementos de la lista. Para ello aparecerá un botón junto a cada entrada, que permita su eliminación. Antes de eliminar un usuario, debe aparecer una ventana de confirmación.
+
+# Ejercicio 2.18 
+Vamos a cambiar el comportamiento cuando se introduce un nombre que ya existe en la agenda, de modo que ahora se cambie el número de teléfono por el nuevo que se introduzca. También hay que añadir algo al ejercicio anterior. Antes de eliminar un número debe aparecer una ventana de confirmación.
